@@ -180,7 +180,7 @@ as_base "$base_home/.emacs.d/bin/doom -y sync"
 log_step 0 "Installing Starship..."
 
 log_list 1 "Fetching installer"
-as_base "curl -fsSL https://starship.rs/install.sh > starship_install.sh"
+curl -fsSL https://starship.rs/install.sh > starship_install.sh
 
 log_list 1 "Making executable"
 as_base "chmod +x starship_install.sh"

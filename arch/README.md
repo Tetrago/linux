@@ -1,4 +1,4 @@
-# dotfiles
+# Arch
 
 ## Installing Arch
 
@@ -24,7 +24,7 @@ Go through the basic installation process for Arch:
 Execute the installation script:
 
 1. Add your hostname to `/etc/hostname`
-2. `curl -sLf https://raw.githubusercontent.com/Tetrago/linux/master/arch_install.sh | bash`
+2. `curl -sLf https://raw.githubusercontent.com/Tetrago/linux/master/arch/install.sh | bash`
 
 Setup users:
 1. `passwd`
@@ -56,7 +56,7 @@ Quit:
 
 After rebooting, execute the setup script:
 
-`curl -sLf https://raw.githubusercontent.com/Tetrago/linux/master/arch_setup.sh | sudo bash`
+`curl -sLf https://raw.githubusercontent.com/Tetrago/linux/master/arch/setup.sh | sudo bash`
 
 Beware that XDG Autostart make cause tray icons to run twice. [Arch Wiki](https://wiki.archlinux.org/title/XDG_Autostart)
 

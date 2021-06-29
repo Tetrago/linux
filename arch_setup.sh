@@ -128,7 +128,7 @@ log_list 1 "Cloning dotfiles"
 as_base "git clone -q --bare https://github.com/Tetrago/dotfiles.git $base_home/dotfiles"
 
 log_list 1 "Checkout dotfiles"
-as_base "git --git-dir=$base_user/dotfiles --work-tree $base_home checkout"
+as_base "git --git-dir=$base_home/dotfiles --work-tree=$base_home checkout"
 
 # --- Installing SpaceVim -------------------------------------------------------------------------
 

@@ -183,7 +183,7 @@ log_list 1 "Fetching installer"
 curl -fsSL https://starship.rs/install.sh > starship_install.sh
 
 log_list 1 "Making executable"
-as_base "chmod +x starship_install.sh"
+chmod +x starship_install.sh
 
 log_list 1 "Installing"
 as_base "./starship_install.sh --yes"

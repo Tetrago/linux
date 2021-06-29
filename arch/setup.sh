@@ -57,7 +57,7 @@ pacman_install ()
   pacman -Sq --noconfirm --needed $2 &> /dev/null
 }
 
-packages=( neovim git base-devel xorg-server make cmake emacs xmonad xmonad-contrib xmobar fish picom nitrogen lightdm alacritty xterm dmenu dunst tldr man exa procs bat ripgrep fd neofetch trayer lxsession network-manager-applet pcmanfm-gtk3 lxappearance feh xfce4-power-manager )
+packages=( neovim git base-devel xorg-server make cmake emacs xmonad xmonad-contrib xmobar fish picom nitrogen lightdm alacritty xterm dmenu dunst tldr man exa procs bat ripgrep fd neofetch trayer lxsession network-manager-applet pcmanfm-gtk3 lxappearance feh xfce4-power-manager ufw )
 
 for i in "${packages[@]}"
 do
@@ -195,6 +195,12 @@ as_base "./starship_install.sh --yes"
 log_list 1 "Cleaning"
 rm starship_install.sh
 
+# --- Remaining settings --------------------------------------------------------------------------
+
+log_step 0 "Remaining settings..."
+
+log_list 1 "Enabling UFW"
+systemctl enable ufw
 
 # --- Finializing setup process -------------------------------------------------------------------
 

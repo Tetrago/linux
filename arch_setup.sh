@@ -66,7 +66,7 @@ done
 
 # --- AUR -----------------------------------------------------------------------------------------
 
-log_step 0 "Installing AURs..."
+log_step 0 "Installing AUR's..."
 
 log_step 1 "Installing AUR helper..."
 
@@ -153,7 +153,7 @@ then
   log_list 1 "Installing"
   as_base "$base_home/.emacs.d/bin/doom -y install"
 else
-  log_step 1 "'.doom.d' found, skipping"
+  log_list 1 "'.doom.d' found, skipping"
 fi
 
 init_el="$base_home/.doom.d/init.el"

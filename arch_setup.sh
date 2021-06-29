@@ -73,15 +73,15 @@ log_step 1 "Installing AUR helper..."
 if ! command -v yay &> /dev/null
 then
   log_list 2 "Cloning 'yay' repository"
-  as_base "git clone -q https://aur.archlinux.org/yay.git"
+  as_base "git clone -q https://aur.archlinux.org/yay.git $base_home/yay"
 
   log_list 2 "Building"
-  cd yay
+  cd $base_home/yay
   sudo -u $base_user makepkg -si --noconfirm &> /dev/null
   cd ..
   
   log_list 2 "Cleaning"
-  rm -rf yay
+  rm -rf $base_home/yay
 else
   log_list 2 "'yay' found, skipping..."
 fi
@@ -124,8 +124,13 @@ log_step 0 "Replicating configuration..."
 log_list 1 "Changing shell"
 chsh -s /bin/fish $base_user &> /dev/null
 
-log_list 1 "Cloning dotfiles"
-as_base "git clone -q --bare https://github.com/Tetrago/dotfiles.git $base_home/dotfiles"
+if ! command -v $base_home/dotfiles &> /dev/null
+then
+  log_list 1 "Cloning dotfiles"
+  as_base "git clone -q --bare https://github.com/Tetrago/dotfiles.git $base_home/dotfiles"
+else
+  log_list 1 "'dotfiles' found, skipping clone"
+fi
 
 log_list 1 "Checkout dotfiles"
 as_base "git --git-dir=$base_home/dotfiles --work-tree=$base_home checkout"

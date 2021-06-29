@@ -64,18 +64,6 @@ do
   pacman_install 1 $i
 done
 
-# --- Creating work directory ---------------------------------------------------------------------
-
-log_step 0 "Creating working directory for script..."
-
-cd $base_home
-rm -rf arch_setup
-as_base "mkdir arch_setup"
-cd arch_setup
-
-log_step 1 "Cloning dotfiles repository..."
-as_base "git clone -q https://github.com/Tetrago/dotfiles.git"
-
 # --- AUR -----------------------------------------------------------------------------------------
 
 log_step 0 "Installing AURs..."
@@ -91,6 +79,9 @@ then
   cd yay
   sudo -u $base_user makepkg -si --noconfirm &> /dev/null
   cd ..
+  
+  log_list 2 "Cleaning"
+  rm -rf yay
 else
   log_list 2 "'yay' found, skipping..."
 fi
@@ -137,7 +128,7 @@ log_list 1 "Cloning dotfiles"
 as_base "git clone -q --bare https://github.com/Tetrago/dotfiles.git dotfiles"
 
 log_list 1 "Checkout dotfiles"
-as_base "git --git-dit=$base_user/dotfiles --work-tree $base_user checkout"
+as_base "git --git-dir=$base_user/dotfiles --work-tree $base_user checkout"
 
 # --- Installing SpaceVim -------------------------------------------------------------------------
 

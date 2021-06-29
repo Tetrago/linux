@@ -127,7 +127,7 @@ chsh -s /bin/fish $base_user &> /dev/null
 if [ ! -d "$base_home/dotfiles" ]
 then
   log_list 1 "Cloning dotfiles"
-  as_base "git clone -q --bare https://github.com/Tetrago/dotfiles.git $base_home/dotfiles"
+  as_base "git clone -q --bare git@github.com:Tetrago/dotfiles.git $base_home/dotfiles"
 else
   log_list 1 "'dotfiles' found, skipping clone"
 fi

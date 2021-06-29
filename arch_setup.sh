@@ -191,9 +191,6 @@ rm starship_install.sh
 
 log_step 0 "Finializing setup..."
 
-cd ..
-rm -rf arch_setup
-
 echo -e "          _                                 _     _       "
 echo -e "  ___ ___| |_ _  _ _ __   __ ___ _ __  _ __| |___| |_ ___ "
 echo -e " (_-</ -_)  _| || | '_ \ / _/ _ \ '  \| '_ \ / -_)  _/ -_)"

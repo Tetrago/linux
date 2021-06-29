@@ -132,8 +132,12 @@ else
   log_list 1 "'dotfiles' found, skipping clone"
 fi
 
+git_cmd="git --git-dir=$base_home/dotfiles --work-tree=$base_home"
+
 log_list 1 "Checkout dotfiles"
-as_base "git --git-dir=$base_home/dotfiles --work-tree=$base_home checkout"
+as_base "$git_cmd fetch --all"
+as_base "$git_cmd reset --hard orgin/master"
+as_base "$git_cmd checkout"
 
 # --- Installing SpaceVim -------------------------------------------------------------------------
 

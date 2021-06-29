@@ -9,11 +9,11 @@ Go through the basic installation process for Arch:
 2. `timedatectl set-ntp true`
 3. Partition your drive(s)
     - Create the filesystems
-        - mkfs.ext4
-        - mkswap
-        - swapon
+        - `mkfs.ext4`
+        - `mkswap`
+        - `swapon`
      - Make sure to create 550M EFI partition if booting with UEFI
-        - mkfs.fat -F32
+        - `mkfs.fat -F32`
 4. `mount /dev/root_partition /mnt`
 5. `pacstrap /mnt base linux linux-firmware`
 6. `genfstab -U /mnt >> /mnt/etc/fstab`

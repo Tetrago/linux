@@ -124,7 +124,7 @@ log_step 0 "Replicating configuration..."
 log_list 1 "Changing shell"
 chsh -s /bin/fish $base_user &> /dev/null
 
-if ! command -v $base_home/dotfiles &> /dev/null
+if [ ! -d "$base_home/dotfiles" ]
 then
   log_list 1 "Cloning dotfiles"
   as_base "git clone -q --bare https://github.com/Tetrago/dotfiles.git $base_home/dotfiles"
@@ -152,35 +152,35 @@ then
 
   log_list 1 "Installing"
   as_base "$base_home/.emacs.d/bin/doom -y install"
-
-  init_el="$base_home/.doom.d/init.el"
-
-  log_list 1 "Modifing configuration"
-  sed -i 's/;;neotree/neotree/' ${init_el}
-  sed -i 's/;;vterm/vterm/' ${init_el}
-  sed -i 's/;;make/make/' ${init_el}
-  sed -i 's/;;cc/cc/' ${init_el}
-  sed -i 's/;;csharp/csharp/' ${init_el}
-  sed -i 's/;;json/json/' ${init_el}
-  sed -i 's/;;javascript/javascript/' ${init_el}
-  sed -i 's/;;lua/lua/' ${init_el}
-  sed -i 's/;;php/php/' ${init_el}
-  sed -i 's/;;python/python/' ${init_el}
-  sed -i 's/;;rust/rust/' ${init_el}
-  sed -i 's/;;yaml/yaml/' ${init_el}
-
-  log_list 1 "Syncing"
-  as_base "$base_home/.emacs.d/bin/doom -y sync"
 else
   log_step 1 "'.doom.d' found, skipping"
 fi
+
+init_el="$base_home/.doom.d/init.el"
+
+log_list 1 "Modifing configuration"
+sed -i 's/;;neotree/neotree/' ${init_el}
+sed -i 's/;;vterm/vterm/' ${init_el}
+sed -i 's/;;make/make/' ${init_el}
+sed -i 's/;;cc/cc/' ${init_el}
+sed -i 's/;;csharp/csharp/' ${init_el}
+sed -i 's/;;json/json/' ${init_el}
+sed -i 's/;;javascript/javascript/' ${init_el}
+sed -i 's/;;lua/lua/' ${init_el}
+sed -i 's/;;php/php/' ${init_el}
+sed -i 's/;;python/python/' ${init_el}
+sed -i 's/;;rust/rust/' ${init_el}
+sed -i 's/;;yaml/yaml/' ${init_el}
+
+log_list 1 "Syncing"
+as_base "$base_home/.emacs.d/bin/doom -y sync"
 
 # --- Installing Starship -------------------------------------------------------------------------
 
 log_step 0 "Installing Starship..."
 
 log_list 1 "Fetching installer"
-as_base "curl -fsSL "https://starship.rs/install.sh" > starship_install.sh"
+as_base "curl -fsSL https://starship.rs/install.sh > starship_install.sh"
 
 log_list 1 "Making executable"
 as_base "chmod +x starship_install.sh"

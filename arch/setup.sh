@@ -1,13 +1,5 @@
 #!/bin/bash
 
-echo -e "                     .__                        __                "
-echo -e "_____ _______   ____ |  |__        ______ _____/  |_ __ ________  "
-echo -e "\__  \\_  __ \_/ ___\|  |  \      /  ___// __ \   __\  |  \____ \ "
-echo -e " / __ \|  | \/\  \___|   Y  \     \___ \\  ___/|  | |  |  /  |_> >"
-echo -e "(____  /__|    \___  >___|  /____/____  >\___  >__| |____/|   __/ "
-echo -e "     \/            \/     \/_____/    \/     \/           |__|    "
-echo ""
-
 base_user=${SUDO_USER:-${USER}}
 base_home=$(eval echo ~$base_user)
 
@@ -42,10 +34,15 @@ as_base ()
 
 # --- Basic setup ---------------------------------------------------------------------------------
 
-log_step 0 "Running basic setup processes..."
-
-sudo -n true
 set -euo pipefail
+sudo -n true
+test $? -eq 0 || exit 1 "Sudo privileges are required"
+
+log_step 0 "Installing script dependencies..."
+
+pacman -Sq --noconfirm --needed figlet cowsay lolcat &> /dev/null
+
+figlet arch_setup | lolcat
 
 # --- Packages  -----------------------------------------------------------------------------------
 
@@ -57,7 +54,7 @@ pacman_install ()
   pacman -Sq --noconfirm --needed $2 &> /dev/null
 }
 
-packages=( neovim git base-devel xorg-server make cmake emacs xmonad xmonad-contrib xmobar fish picom nitrogen lightdm alacritty xterm dmenu dunst tldr man exa procs bat ripgrep fd neofetch trayer lxsession network-manager-applet pcmanfm-gtk3 lxappearance feh xfce4-power-manager ufw slock gvfs alsa-utils playerctl pulseaudio pulseaudio-alsa pavucontrol okular )
+packages=( neovim git base-devel xorg-server make cmake emacs xmonad xmonad-contrib xmobar fish picom nitrogen lightdm alacritty xterm dmenu dunst tldr man exa procs bat ripgrep fd neofetch trayer lxsession network-manager-applet pcmanfm-gtk3 lxappearance feh xfce4-power-manager ufw slock gvfs alsa-utils playerctl pulseaudio pulseaudio-alsa pavucontrol okular thefuck )
 
 for i in "${packages[@]}"
 do
@@ -162,7 +159,7 @@ fi
 
 init_el="$base_home/.doom.d/init.el"
 
-log_list 1 "Modifing configuration"
+log_list 1 "Modifying configuration"
 sed -i 's/;;neotree/neotree/' ${init_el}
 sed -i 's/;;vterm/vterm/' ${init_el}
 sed -i 's/;;make/make/' ${init_el}
@@ -204,10 +201,4 @@ systemctl enable ufw
 
 # --- Finializing setup process -------------------------------------------------------------------
 
-log_step 0 "Finializing setup..."
-
-echo -e "          _                                 _     _       "
-echo -e "  ___ ___| |_ _  _ _ __   __ ___ _ __  _ __| |___| |_ ___ "
-echo -e " (_-</ -_)  _| || | '_ \ / _/ _ \ '  \| '_ \ / -_)  _/ -_)"
-echo -e " /__/\___|\__|\_,_| .__/ \__\___/_|_|_| .__/_\___|\__\___|"
-echo -e "                  |_|                 |_|                 "
+cowsay setup complete

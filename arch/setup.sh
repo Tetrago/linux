@@ -54,7 +54,7 @@ pacman_install ()
   pacman -Sq --noconfirm --needed $2 &> /dev/null
 }
 
-packages=( neovim git base-devel xorg-server make cmake emacs xmonad xmonad-contrib xmobar fish picom nitrogen lightdm alacritty xterm dmenu dunst tldr man exa procs bat ripgrep fd neofetch trayer lxsession network-manager-applet pcmanfm-gtk3 lxappearance feh xfce4-power-manager ufw slock gvfs alsa-utils playerctl pulseaudio pulseaudio-alsa pavucontrol okular thefuck )
+packages=( neovim git base-devel xorg-server make cmake emacs xmonad xmonad-contrib xmobar fish picom nitrogen lightdm alacritty xterm dmenu dunst tldr man exa procs bat ripgrep fd neofetch trayer lxsession network-manager-applet pcmanfm-gtk3 lxappearance feh xfce4-power-manager ufw slock gvfs alsa-utils playerctl pulseaudio pulseaudio-alsa pavucontrol okular thefuck nnn kmon lazygit )
 
 for i in "${packages[@]}"
 do
@@ -91,7 +91,7 @@ paru_install ()
   sudo -u $base_user paru -Sq --noconfirm $2 &> /dev/null
 }
 
-packages=( caffeine-ng neovim-symlinks pnmixer archlinux-wallpaper google-chrome dtrx dmscripts-git shell-color-scripts )
+packages=( caffeine-ng neovim-symlinks pnmixer archlinux-wallpaper google-chrome dtrx dmscripts-git shell-color-scripts glow )
 
 for i in "${packages[@]}"
 do

@@ -67,35 +67,35 @@ log_step 0 "Installing AUR's..."
 
 log_step 1 "Installing AUR helper..."
 
-if ! command -v yay &> /dev/null
+if ! command -v paru &> /dev/null
 then
-  log_list 2 "Cloning 'yay' repository"
-  as_base "git clone -q https://aur.archlinux.org/yay.git $base_home/yay"
+  log_list 2 "Cloning 'paru' repository"
+  as_base "git clone -q https://aur.archlinux.org/paru.git $base_home/paru"
 
   log_list 2 "Building"
-  cd $base_home/yay
+  cd $base_home/paru
   sudo -u $base_user makepkg -si --noconfirm &> /dev/null
   cd ..
   
   log_list 2 "Cleaning"
-  rm -rf $base_home/yay
+  rm -rf $base_home/paru
 else
-  log_list 2 "'yay' found, skipping..."
+  log_list 2 "'paru' found, skipping..."
 fi
 
 log_step 1 "Installing AUR packages..."
 
-yay_install ()
+paru_install ()
 {
   log_list $1 "$2"
-  sudo -u $base_user yay -Sq --noconfirm $2 &> /dev/null
+  sudo -u $base_user paru -Sq --noconfirm $2 &> /dev/null
 }
 
 packages=( caffeine-ng neovim-symlinks pnmixer archlinux-wallpaper google-chrome dtrx dmscripts-git shell-color-scripts )
 
 for i in "${packages[@]}"
 do
-  yay_install 2 $i
+  paru_install 2 $i
 done
 
 # --- Confirguring lightdm ------------------------------------------------------------------------

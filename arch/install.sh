@@ -94,7 +94,6 @@ pacman -Sq --noconfirm --needed sudo &> /dev/null
 
 log_list 1 "Editing sudoers file"
 sed -i "s/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/" /etc/sudoers
-echo "Defaults passwd_timeout=0" >> /etc/sudoers
 
 # --- Boot ----------------------------------------------------------------------------------------
 

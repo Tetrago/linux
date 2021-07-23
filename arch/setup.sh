@@ -44,7 +44,24 @@ pacman -Sq --noconfirm --needed figlet cowsay lolcat &> /dev/null
 
 figlet arch_setup | lolcat
 
+# --- Updates -------------------------------------------------------------------------------------
+
+sudo -n true
+
+log_step 0 "Running updates..."
+
+if command -v paru &> /dev/null
+then
+  log_step 1 "Running paru..."
+  paru -Syu --noconfirm --sudoloop
+else
+  log_step 1 "Running pacman..."
+  pacman -Syu --noconfirm
+fi
+
 # --- Packages  -----------------------------------------------------------------------------------
+
+sudo -n true
 
 log_step 0 "Installing packages from pacman..."
 
@@ -62,6 +79,8 @@ do
 done
 
 # --- AUR -----------------------------------------------------------------------------------------
+
+sudo -n true
 
 log_step 0 "Installing AUR's..."
 
@@ -88,7 +107,7 @@ log_step 1 "Installing AUR packages..."
 paru_install ()
 {
   log_list $1 "$2"
-  sudo -u $base_user paru -Sq --noconfirm $2 &> /dev/null
+  sudo -u $base_user paru -Sq --noconfirm --sudoloop $2 &> /dev/null
 }
 
 packages=( caffeine-ng neovim-symlinks pnmixer archlinux-wallpaper google-chrome dtrx dmscripts-git shell-color-scripts glow )

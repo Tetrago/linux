@@ -60,7 +60,7 @@ timedatectl set-ntp true
 log_step 0 "Managing localization..."
 
 log_list 1 "Modifying locale.gen"
-sed -i  's/#en_US.UTF-8 UTF-8/#en_US.UTF-8 UTF-8/' /etc/locale.gen
+sed -i  's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 
 log_list 1 "Running locale generation"
 locale-gen &> /dev/null

@@ -64,4 +64,3 @@ Beware that XDG Autostart make cause tray icons to run twice. [Arch Wiki](https:
 
 Dotfiles can be updated:
 - `dotfiles pull`
-- `dotfiles checkout`

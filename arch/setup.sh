@@ -197,7 +197,7 @@ rm starship_install.sh
 log_step 0 "Remaining settings..."
 
 log_list 1 "Enabling UFW"
-systemctl enable ufw
+systemctl enable ufw &> /dev/null
 
 # --- Finializing setup process -------------------------------------------------------------------
 

@@ -53,10 +53,10 @@ log_step 0 "Running updates..."
 if command -v paru &> /dev/null
 then
   log_step 1 "Running paru..."
-  paru -Syu --noconfirm --sudoloop
+  paru -Syu --noconfirm --sudoloop &> /dev/null
 else
   log_step 1 "Running pacman..."
-  pacman -Syu --noconfirm
+  pacman -Syu --noconfirm &> /dev/null
 fi
 
 # --- Packages  -----------------------------------------------------------------------------------

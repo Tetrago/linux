@@ -110,7 +110,7 @@ paru_install ()
   sudo -u $base_user paru -Sq --noconfirm --sudoloop $2 &> /dev/null
 }
 
-packages=( caffeine-ng neovim-symlinks pnmixer archlinux-wallpaper google-chrome dtrx dmscripts-git shell-color-scripts glow )
+packages=( caffeine-ng neovim-symlinks pnmixer archlinux-wallpaper google-chrome dtrx dmscripts-git shell-color-scripts glow ark )
 
 for i in "${packages[@]}"
 do

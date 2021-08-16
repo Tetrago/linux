@@ -110,7 +110,7 @@ paru_install ()
   sudo -u $base_user paru -Sq --noconfirm --sudoloop $2 &> /dev/null
 }
 
-packages=( neovim-symlinks nerd-fonts-fira-code archlinux-wallpaper google-chrome dtrx dmscripts-git glow ark polybar bsp-layout bashtop )
+packages=( zoxide-bin nerd-fonts-fira-code archlinux-wallpaper google-chrome dtrx dmscripts-git glow ark polybar bsp-layout bashtop )
 
 for i in "${packages[@]}"
 do

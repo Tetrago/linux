@@ -172,8 +172,6 @@ then
 
   log_list 1 "Installing"
   as_base "$base_home/.emacs.d/bin/doom -y install"
-  y
-  y
 else
   log_list 1 "'.doom.d' found, skipping"
 fi

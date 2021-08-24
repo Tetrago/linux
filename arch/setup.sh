@@ -71,7 +71,7 @@ pacman_install ()
   pacman -Sq --noconfirm --needed $2 &> /dev/null
 }
 
-packages=( neovim git base-devel xorg-server make cmake emacs bspwm fish picom nitrogen lightdm alacritty xterm dmenu dunst tldr man exa procs bat ripgrep fd neofetch lxsession network-manager-applet pcmanfm-gtk3 lxappearance feh xfce4-power-manager ufw gvfs alsa-utils playerctl pulseaudio pulseaudio-alsa pavucontrol zathura zathura-pdf-mupdf thefuck nnn kmon lazygit )
+packages=( neovim git base-devel xorg-server make cmake emacs bspwm fish picom nitrogen lightdm alacritty xterm dmenu dunst tldr man exa procs bat ripgrep fd neofetch lxsession network-manager-applet pcmanfm-gtk3 lxappearance feh xfce4-power-manager ufw gvfs alsa-utils playerctl pulseaudio pulseaudio-alsa pavucontrol zathura zathura-pdf-mupdf thefuck nnn kmon lazygit zoxide )
 
 for i in "${packages[@]}"
 do
@@ -110,7 +110,7 @@ paru_install ()
   sudo -u $base_user paru -Sq --noconfirm --sudoloop $2 &> /dev/null
 }
 
-packages=( zoxide-bin nerd-fonts-fira-code archlinux-wallpaper google-chrome dtrx dmscripts-git glow ark polybar bsp-layout bashtop )
+packages=( nerd-fonts-fira-code archlinux-wallpaper google-chrome dtrx dmscripts-git glow ark polybar bsp-layout bashtop )
 
 for i in "${packages[@]}"
 do

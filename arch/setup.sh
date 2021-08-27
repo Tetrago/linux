@@ -71,7 +71,7 @@ pacman_install ()
   pacman -Sq --noconfirm --needed $2 &> /dev/null
 }
 
-packages=( neovim git base-devel xorg-server xorg-xrdb make cmake emacs bspwm sxhkd fish picom nitrogen lightdm alacritty rofi dunst tldr man exa procs bat ripgrep fd neofetch lxsession network-manager-applet pcmanfm-gtk3 lxappearance feh xfce4-power-manager ufw gvfs alsa-utils playerctl pulseaudio pulseaudio-alsa pavucontrol zathura zathura-pdf-mupdf thefuck ranger kmon zoxide scrot xclip )
+packages=( neovim git base-devel xorg-server xorg-xrdb make cmake emacs bspwm sxhkd fish picom nitrogen lightdm alacritty rofi dunst tldr man exa procs bat ripgrep fd neofetch lxsession network-manager-applet pcmanfm-gtk3 lxappearance feh xfce4-power-manager ufw gvfs alsa-utils playerctl pulseaudio pulseaudio-alsa pavucontrol zathura zathura-pdf-mupdf thefuck ranger kmon zoxide scrot xclip acpi )
 
 for i in "${packages[@]}"
 do

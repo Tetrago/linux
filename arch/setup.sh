@@ -50,14 +50,7 @@ sudo -n true
 
 log_step 0 "Running updates..."
 
-if command -v paru &> /dev/null
-then
-  log_step 1 "Running paru..."
-  paru -Syu --noconfirm --sudoloop &> /dev/null
-else
-  log_step 1 "Running pacman..."
-  pacman -Syu --noconfirm &> /dev/null
-fi
+pacman -Syu --noconfirm &> /dev/null
 
 # --- Packages  -----------------------------------------------------------------------------------
 
@@ -71,7 +64,7 @@ pacman_install ()
   pacman -Sq --noconfirm --needed $2 &> /dev/null
 }
 
-packages=( neovim git base-devel xorg-server xorg-xrdb make cmake emacs bspwm sxhkd fish picom nitrogen lightdm alacritty rofi dunst tldr man exa procs bat ripgrep fd neofetch lxsession network-manager-applet pcmanfm-gtk3 lxappearance feh xfce4-power-manager ufw gvfs alsa-utils playerctl pulseaudio pulseaudio-alsa pavucontrol zathura zathura-pdf-mupdf thefuck ranger kmon zoxide scrot xclip acpi )
+packages=( neovim git base-devel xorg-server xorg-xrdb make cmake emacs fish picom nitrogen lightdm alacritty rofi dunst tldr man exa procs bat ripgrep fd neofetch lxsession network-manager-applet pcmanfm-gtk3 lxappearance feh xfce4-power-manager ufw gvfs alsa-utils playerctl pulseaudio pulseaudio-alsa pavucontrol zathura zathura-pdf-mupdf thefuck ranger kmon zoxide scrot xclip acpi )
 
 for i in "${packages[@]}"
 do
@@ -86,35 +79,35 @@ log_step 0 "Installing AUR's..."
 
 log_step 1 "Installing AUR helper..."
 
-if ! command -v paru &> /dev/null
+if ! command -v aura &> /dev/null
 then
-  log_list 2 "Cloning 'paru' repository"
-  as_base "git clone -q https://aur.archlinux.org/paru.git $base_home/paru"
+  log_list 2 "Cloning 'aura' repository"
+  as_base "git clone -q https://aur.archlinux.org/aura.git $base_home/aura"
 
   log_list 2 "Building"
-  cd $base_home/paru
+  cd $base_home/aura
   sudo -u $base_user makepkg -si --noconfirm &> /dev/null
   cd ..
   
   log_list 2 "Cleaning"
-  rm -rf $base_home/paru
+  rm -rf $base_home/aura
 else
-  log_list 2 "'paru' found, skipping..."
+  log_list 2 "'aura' found, skipping..."
 fi
 
 log_step 1 "Installing AUR packages..."
 
-paru_install ()
+aura_install ()
 {
   log_list $1 "$2"
-  sudo -u $base_user paru -Sq --noconfirm --sudoloop $2 &> /dev/null
+  sudo aura -A --noconfirm $2 &> /dev/null
 }
 
-packages=( nerd-fonts-fira-code archlinux-wallpaper google-chrome dtrx glow ark polybar bsp-layout bashtop )
+packages=( nerd-fonts-fira-code archlinux-wallpaper google-chrome dtrx glow ark polybar-dwm-module bashtop xinit-xsession )
 
 for i in "${packages[@]}"
 do
-  paru_install 2 $i
+  aura_install 2 $i
 done
 
 # --- Confirguring lightdm ------------------------------------------------------------------------
@@ -210,6 +203,12 @@ as_base "./starship_install.sh --yes"
 
 log_list 1 "Cleaning"
 rm starship_install.sh
+
+# --- Building dwm --------------------------------------------------------------------------------
+
+log_step 0 "Building dwm..."
+
+as_base "cd $base_home/.dwm && make && make install"
 
 # --- Remaining settings --------------------------------------------------------------------------
 

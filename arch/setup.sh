@@ -168,6 +168,10 @@ status "Building dwm..."
 
 cd $HOME/.dwm && make && make install
 
+status "Building dmenu..."
+
+cd $HOME/.dmenu && make && make install
+
 status "Enabling UFW..."
 sudo systemctl enable ufw
 

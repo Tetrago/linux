@@ -15,7 +15,7 @@ if [ "$(id -u)" = 0 ]; then
     error "DO NOT execute this scrip as the root user"
 fi
 
-sudo pacman -S --noconfirm &> /dev/null
+sudo pacman -S --noconfirm --needed dialog &> /dev/null
 
 welcome()
 {

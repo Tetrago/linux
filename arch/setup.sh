@@ -48,6 +48,7 @@ declare -a pacman_packages=(
     "bat"
     "ripgrep"
     "fd"
+    "dmenu"
     "neofetch"
     "lxsession"
     "network-manager-applet"

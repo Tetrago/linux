@@ -52,9 +52,6 @@ ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
 log_list 1 "Setting hardware clock"
 hwclock --systohc
 
-log_list 1 "Enabling NTP"
-timedatectl set-ntp true
-
 # --- Localization --------------------------------------------------------------------------------
 
 log_step 0 "Managing localization..."
@@ -79,6 +76,10 @@ echo "127.0.0.1 localhost" >> /etc/hosts
 echo "::1 localhost" >> /etc/hosts
 echo "127.0.1.1 $hostname.localdomain $hostname" >> /etc/hosts
 
+log_list 1 "Installing archlinux-keyring"
+pacman -Sy --noconfirm archlinux-keyring &> /dev/null
+pacman -Su --noconfirm &> /dev/null
+
 log_list 1 "Installing networkmanager"
 pacman -Sq --noconfirm --needed networkmanager &> /dev/null
 
@@ -96,8 +97,5 @@ log_list 1 "Editing sudoers file"
 sed -i "s/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/" /etc/sudoers
 
 # --- Boot ----------------------------------------------------------------------------------------
-
-log_step 0 "Installing GRUB..."
-pacman -Sq --noconfirm grub &> /dev/null
 
 log_step 0 "Done!"

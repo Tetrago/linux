@@ -1,225 +1,176 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-base_user=${SUDO_USER:-${USER}}
-base_home=$(eval echo ~$base_user)
-
-COLOR_GREEN='\033[0;32m'
-COLOR_CYAN='\033[0;36m'
-COLOR_NONE='\033[0m'
-
-printf_space ()
+error()
 {
-  for i in $(seq $1)
-  do
-    echo -n "  "
-  done
+    printf "$1\\n" >&2
+    exit 1
 }
 
-log_step ()
+status()
 {
-  printf_space $1
-  echo -e "$COLOR_GREEN> $2$COLOR_NONE"
+    printf "\\033[1;32m>> $1\\033[0m\\n"
 }
 
-log_list ()
+if [ "$(id -u)" = 0 ]; then
+    error "DO NOT execute this scrip as the root user"
+fi
+
+sudo pacman -S --noconfirm &> /dev/null
+
+welcome()
 {
-  printf_space $1
-  echo -e "$COLOR_CYAN- $2$COLOR_NONE"
+    dialog --colors --title "\ZbUser Environment Setup Script" --msgbox "This script will install and configure a user environment. Any existing configuration files and packages are not guaranteed to remain intact." 16 60
+    dialog --colors --title "\ZbProcedure" --yes-label "Continue" --no-label "Abort" --yesno "Please stay present during the installation process." 8 60
 }
 
-as_base ()
-{
-  sudo -u $base_user $1
-}
+welcome || error "Setup script aborted"
 
-# --- Basic setup ---------------------------------------------------------------------------------
+declare -a pacman_packages=(
+    "neovim"
+    "git"
+    "base-devel"
+    "xorg-server"
+    "xorg-xrdb"
+    "make"
+    "cmake"
+    "emacs"
+    "fish"
+    "picom"
+    "nitrogen"
+    "lightdm"
+    "alacritty"
+    "rofi"
+    "dunst"
+    "tldr"
+    "man"
+    "exa"
+    "procs"
+    "bat"
+    "ripgrep"
+    "fd"
+    "neofetch"
+    "lxsession"
+    "network-manager-applet"
+    "pcmanfm-gtk3"
+    "lxappearance"
+    "feh"
+    "xfce4-power-manager"
+    "ufw"
+    "gvfs"
+    "alsa-utils"
+    "playerctl"
+    "pulseaudio"
+    "pulseaudio-alsa"
+    "pavucontrol"
+    "zathura"
+    "zathura-pdf-mupdf"
+    "thefuck"
+    "ranger"
+    "kmon"
+    "zoxide"
+    "scrot"
+    "xclip"
+    "acpi"
+    "lightdm-webkit2-greeter"
+    "lightdm-webkit-theme-litarvan"
+)
 
-set -euo pipefail
-sudo -n true
-test $? -eq 0 || exit 1 "Sudo privileges are required"
+status "Installing pacman packages..."
 
-log_step 0 "Installing script dependencies..."
-
-pacman -Sq --noconfirm --needed figlet cowsay lolcat &> /dev/null
-
-figlet arch_setup | lolcat
-
-# --- Updates -------------------------------------------------------------------------------------
-
-sudo -n true
-
-log_step 0 "Running updates..."
-
-pacman -Syu --noconfirm &> /dev/null
-
-# --- Packages  -----------------------------------------------------------------------------------
-
-sudo -n true
-
-log_step 0 "Installing packages from pacman..."
-
-pacman_install ()
-{
-  log_list $1 "$2"
-  pacman -Sq --noconfirm --needed $2 &> /dev/null
-}
-
-packages=( neovim git base-devel xorg-server xorg-xrdb make cmake emacs fish picom nitrogen lightdm alacritty rofi dunst tldr man exa procs bat ripgrep fd neofetch lxsession network-manager-applet pcmanfm-gtk3 lxappearance feh xfce4-power-manager ufw gvfs alsa-utils playerctl pulseaudio pulseaudio-alsa pavucontrol zathura zathura-pdf-mupdf thefuck ranger kmon zoxide scrot xclip acpi )
-
-for i in "${packages[@]}"
-do
-  pacman_install 1 $i
+for package in "${pacman_packages[@]}"; do
+    sudo pacman -S --noconfirm --needed "$package"
 done
 
-# --- AUR -----------------------------------------------------------------------------------------
+if [ ! command -v "aura" > /dev/null ]; then
+    status "Installing aura..."
 
-sudo -n true
-
-log_step 0 "Installing AUR's..."
-
-log_step 1 "Installing AUR helper..."
-
-if ! command -v aura &> /dev/null
-then
-  log_list 2 "Cloning 'aura' repository"
-  as_base "git clone -q https://aur.archlinux.org/aura.git $base_home/aura"
-
-  log_list 2 "Building"
-  cd $base_home/aura
-  sudo -u $base_user makepkg -si --noconfirm &> /dev/null
-  cd ..
-  
-  log_list 2 "Cleaning"
-  rm -rf $base_home/aura
-else
-  log_list 2 "'aura' found, skipping..."
+    git clone -q https://aur.archlinux.org/aura.git $HOME/aura
+    cd $HOME/aura && makepkg -si --noconfirm
+    rm -rf $HOME/aura
 fi
 
-log_step 1 "Installing AUR packages..."
+declare -a aur_packages=(
+    "nerd-fonts-fira-code"
+    "archlinux-wallpaper"
+    "google-chrome"
+    "glow"
+    "ark"
+    "polybar-dwm-module"
+    "bashtop"
+    "xinit-xsession"
+)
 
-aura_install ()
-{
-  log_list $1 "$2"
-  sudo aura -A --noconfirm $2 &> /dev/null
-}
+status "Installing AUR packages..."
 
-packages=( nerd-fonts-fira-code archlinux-wallpaper google-chrome dtrx glow ark polybar-dwm-module bashtop xinit-xsession )
-
-for i in "${packages[@]}"
-do
-  aura_install 2 $i
+for package in "${aur_packages[@]}"; do
+    sudo aura -A --noconfirm "$package"
 done
 
-# --- Confirguring lightdm ------------------------------------------------------------------------
+status "Configuring lightdm..."
 
-log_step 0 "Configuring lightdm..."
+sudo systemctl enable lightdm
+sudo sed -i 's/greeter-session=.*/greeter-session=lightdm-webkit2-greeter/g' /etc/lightdm/lightdm.conf
+sudo sed -i 's/#greeter-session=.*/greeter-session=lightdm-webkit2-greeter/g' /etc/lightdm/lightdm.conf
+sudo sed -i 's/webkit_theme.*/webkit_theme=litarvan/g' /etc/lightdm/lightdm-webkit2-greeter.conf
 
-log_list 1 "Enabling display manager"
-systemctl enable lightdm &> /dev/null
+status "Changing shell..."
 
-log_list 1 "Installing packages"
-pacman_install 2 lightdm-webkit2-greeter
-pacman_install 2 lightdm-webkit-theme-litarvan
+sudo chsh -s /bin/fish $USER
 
-log_list 1 "Modifing configuration"
-sed -i 's/greeter-session=.*/greeter-session=lightdm-webkit2-greeter/g' /etc/lightdm/lightdm.conf
-sed -i 's/#greeter-session=.*/greeter-session=lightdm-webkit2-greeter/g' /etc/lightdm/lightdm.conf
-sed -i 's/webkit_theme.*/webkit_theme=litarvan/g' /etc/lightdm/lightdm-webkit2-greeter.conf
+status "Updating dotfiles..."
 
-# --- Replicating configuration ------------------------------------------------------------------
-
-log_step 0 "Replicating configuration..."
-
-log_list 1 "Changing shell"
-chsh -s /bin/fish $base_user &> /dev/null
-
-if [ ! -d "$base_home/dotfiles" ]
-then
-  log_list 1 "Cloning dotfiles"
-  as_base "git clone -q --bare https://github.com/Tetrago/dotfiles.git $base_home/dotfiles"
-else
-  log_list 1 "'dotfiles' found, skipping clone"
+if [ ! -d "$HOME/dotfiles" ]; then
+    git clone -q --bare https://github.com/Tetrago/dotfiles.git $HOME/dotfiles
 fi
 
-git_cmd="git --git-dir=$base_home/dotfiles --work-tree=$base_home"
+git --git-dir=$HOME/dotfiles --work-tree=$HOME fetch --all
+git --git-dir=$HOME/dotfiles --work-tree=$HOME reset --hard FETCH_HEAD
+git --git-dir=$HOME/dotfiles --work-tree=$HOME checkout
+git --git-dir=$HOME/dotfiles --work-tree=$HOME submodule update --recursive --init
 
-log_list 1 "Checkout dotfiles"
-as_base "$git_cmd fetch --all"
-as_base "$git_cmd reset --hard FETCH_HEAD"
-as_base "$git_cmd checkout"
+status "Installing SpaceVim..."
 
-# --- Installing SpaceVim -------------------------------------------------------------------------
+curl -sLf https://spacevim.org/install.sh | bash
 
-log_step 0 "Installiong SpaceVim..."
+if [ ! -d "$HOME/.doom.d" ]; then
+    status "Installing Doom Emacs..."
 
-sudo -u $base_user curl -sLf https://spacevim.org/install.sh | sudo -u $base_user bash
-
-# --- Installing Doom Emacs -----------------------------------------------------------------------
-
-log_step 0 "Installing Doom Emacs..."
-
-if [ ! -d "$base_home/.doom.d" ]
-then
-  log_list 1 "Cloning"
-  as_base "git clone -q --depth 1 https://github.com/hlissner/doom-emacs $base_home/.emacs.d"
-
-  log_list 1 "Installing"
-  as_base "$base_home/.emacs.d/bin/doom -y install"
-else
-  log_list 1 "'.doom.d' found, skipping"
+    git clone -q --depth 1 https://github.com/hlissner/doom-emacs $HOME/.emacs.d
+    $HOME/.emacs.d/bin/doom -y install
 fi
 
-init_el="$base_home/.doom.d/init.el"
+status "Modifying Doom Emacs configuration..."
 
-log_list 1 "Modifying configuration"
-sed -i 's/;;neotree/neotree/' ${init_el}
-sed -i 's/;;vterm/vterm/' ${init_el}
-sed -i 's/;;make/make/' ${init_el}
-sed -i 's/;;cc/cc/' ${init_el}
-sed -i 's/;;csharp/csharp/' ${init_el}
-sed -i 's/;;json/json/' ${init_el}
-sed -i 's/;;javascript/javascript/' ${init_el}
-sed -i 's/;;lua/lua/' ${init_el}
-sed -i 's/;;php/php/' ${init_el}
-sed -i 's/;;python/python/' ${init_el}
-sed -i 's/;;rust/rust/' ${init_el}
-sed -i 's/;;yaml/yaml/' ${init_el}
+sed -i 's/;;neotree/neotree/' "$HOME/.doom.d/init.el"
+sed -i 's/;;vterm/vterm/' "$HOME/.doom.d/init.el"
+sed -i 's/;;make/make/' "$HOME/.doom.d/init.el"
+sed -i 's/;;cc/cc/' "$HOME/.doom.d/init.el"
+sed -i 's/;;csharp/csharp/' "$HOME/.doom.d/init.el"
+sed -i 's/;;json/json/' "$HOME/.doom.d/init.el"
+sed -i 's/;;javascript/javascript/' "$HOME/.doom.d/init.el"
+sed -i 's/;;lua/lua/' "$HOME/.doom.d/init.el"
+sed -i 's/;;php/php/' "$HOME/.doom.d/init.el"
+sed -i 's/;;python/python/' "$HOME/.doom.d/init.el"
+sed -i 's/;;rust/rust/' "$HOME/.doom.d/init.el"
+sed -i 's/;;yaml/yaml/' "$HOME/.doom.d/init.el"
 
-log_list 1 "Syncing"
-as_base "$base_home/.emacs.d/bin/doom -y sync"
+$HOME/.emacs.d/bin/doom -y sync
 
-# --- Installing Starship -------------------------------------------------------------------------
+status "Installing Starship..."
 
-log_step 0 "Installing Starship..."
-
-log_list 1 "Fetching installer"
 curl -fsSL https://starship.rs/install.sh > starship_install.sh
-
-log_list 1 "Making executable"
 chmod +x starship_install.sh
-
-log_list 1 "Installing"
-as_base "./starship_install.sh --yes"
-
-log_list 1 "Cleaning"
+./starship_install.sh --yes
 rm starship_install.sh
 
-# --- Building dwm --------------------------------------------------------------------------------
+status "Building dwm..."
 
-log_step 0 "Building dwm..."
+cd $HOME/.dwm && make && make install
 
-as_base "cd $base_home/.dwm && make && make install"
+status "Enabling UFW..."
+sudo systemctl enable ufw
 
-# --- Remaining settings --------------------------------------------------------------------------
+status "Linking neovim..."
+sudo ln -sf /usr/bin/nvim /usr/local/bin/vim
 
-log_step 0 "Remaining settings..."
-
-log_list 1 "Enabling UFW"
-systemctl enable ufw &> /dev/null
-
-log_list 1 "Making vim symbolic link..."
-ln -s /usr/bin/nvim /usr/local/bin/vim
-
-# --- Finializing setup process -------------------------------------------------------------------
-
-cowsay setup complete
+dialog --colors --title "\ZbSetup Complete" --msgbox "The setup script completed without errors." 16 60

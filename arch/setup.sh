@@ -82,12 +82,12 @@ for package in "${pacman_packages[@]}"; do
     sudo pacman -S --noconfirm --needed "$package"
 done
 
-if [ ! command -v "aura" > /dev/null ]; then
-    status "Installing aura..."
+if [ ! command -v "paru" > /dev/null ]; then
+    status "Installing paru..."
 
-    git clone -q https://aur.archlinux.org/aura.git $HOME/aura
-    cd $HOME/aura && makepkg -si --noconfirm
-    rm -rf $HOME/aura
+    git clone -q https://aur.archlinux.org/paru.git $HOME/paru
+    cd $HOME/paru && makepkg -si --noconfirm
+    rm -rf $HOME/paru
 fi
 
 declare -a aur_packages=(
@@ -104,7 +104,7 @@ declare -a aur_packages=(
 status "Installing AUR packages..."
 
 for package in "${aur_packages[@]}"; do
-    sudo aura -A --noconfirm "$package"
+    sudo paru -S --noconfirm --sudoloop "$package"
 done
 
 status "Configuring lightdm..."

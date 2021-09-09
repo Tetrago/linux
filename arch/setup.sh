@@ -20,10 +20,27 @@ sudo pacman -S --noconfirm --needed dialog &> /dev/null
 welcome()
 {
     dialog --colors --title "\ZbUser Environment Setup Script" --msgbox "This script will install and configure a user environment. Any existing configuration files and packages are not guaranteed to remain intact." 16 60
-    dialog --colors --title "\ZbProcedure" --yes-label "Continue" --no-label "Abort" --yesno "Please stay present during the installation process." 8 60
+    dialog --colors --title "\ZbProcedure" --yes-label "Continue" --no-label "Abort" --yesno "You will now be prompted for root privileges." 8 60
 }
 
 welcome || error "Setup script aborted"
+
+startsudo()
+{
+    sudo -v
+    ( while true; do sudo -v; sleep 10; done; ) &
+    SUDO_PID = "$!"
+    trap stopsudo SIGINT SIGTERM
+}
+
+stopsudo()
+{
+    kill "$SUDO_PID"
+    trap - SIGINT SIGTERM
+    sudo -k
+}
+
+startsudo
 
 declare -a pacman_packages=(
     "neovim"

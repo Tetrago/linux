@@ -75,6 +75,7 @@ declare -a pacman_packages=(
     "acpi"
     "lightdm-webkit2-greeter"
     "lightdm-webkit-theme-litarvan"
+    "speedcrunch"
 )
 
 status "Installing pacman packages..."

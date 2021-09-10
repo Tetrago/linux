@@ -93,6 +93,7 @@ declare -a pacman_packages=(
     "lightdm-webkit2-greeter"
     "lightdm-webkit-theme-litarvan"
     "speedcrunch"
+    "numlockx"
 )
 
 status "Installing pacman packages..."

@@ -186,11 +186,11 @@ rm starship_install.sh
 
 status "Building dwm..."
 
-cd $HOME/.dwm && make && make install
+make -C $HOME/.dwm install
 
 status "Building dmenu..."
 
-cd $HOME/.dmenu && make && make install
+make -C $HOME/.dmenu install
 
 status "Enabling UFW..."
 sudo systemctl enable ufw

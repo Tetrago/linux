@@ -48,6 +48,7 @@ declare -a pacman_packages=(
     "xorg-server"
     "xorg-xrdb"
     "xorg-xinit"
+    "xorg-xrandr"
     "make"
     "cmake"
     "emacs"

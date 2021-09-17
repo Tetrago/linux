@@ -15,16 +15,6 @@ if [ "$(id -u)" = 0 ]; then
     error "DO NOT execute this scrip as the root user"
 fi
 
-sudo pacman -S --noconfirm --needed dialog &> /dev/null
-
-welcome()
-{
-    dialog --colors --title "\ZbUser Environment Setup Script" --msgbox "This script will install and configure a user environment. Any existing configuration files and packages are not guaranteed to remain intact." 16 60
-    dialog --colors --title "\ZbProcedure" --yes-label "Continue" --no-label "Abort" --yesno "You will now be prompted for root privileges." 8 60
-}
-
-welcome || error "Setup script aborted"
-
 startsudo()
 {
     sudo -v
@@ -41,6 +31,15 @@ stopsudo()
 }
 
 startsudo
+sudo pacman -S --noconfirm --needed dialog &> /dev/null
+
+welcome()
+{
+    dialog --colors --title "\ZbUser Environment Setup Script" --msgbox "This script will install and configure a user environment. Any existing configuration files and packages are not guaranteed to remain intact." 16 60
+    dialog --colors --title "\ZbProcedure" --yes-label "Continue" --no-label "Abort" --yesno "You will now be prompted for root privileges." 8 60
+}
+
+welcome || error "Setup script aborted"
 
 declare -a pacman_packages=(
     "neovim"

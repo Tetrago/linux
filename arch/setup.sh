@@ -102,7 +102,7 @@ for package in "${pacman_packages[@]}"; do
     sudo pacman -S --noconfirm --needed "$package"
 done
 
-if [ ! command -v "paru" > /dev/null ]; then
+if [ ! pacman -Qi paru > /dev/null ]; then
     status "Installing paru..."
 
     git clone -q https://aur.archlinux.org/paru.git $HOME/paru

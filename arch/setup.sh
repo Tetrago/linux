@@ -72,6 +72,7 @@ declare -a pacman_packages=(
     "network-manager-applet"
     "pcmanfm-gtk3"
     "lxappearance"
+    "qt5ct"
     "feh"
     "xfce4-power-manager"
     "ufw"

@@ -49,6 +49,7 @@ declare -a pacman_packages=(
     "xorg-xrdb"
     "xorg-xinit"
     "xorg-xrandr"
+    "xorg-xsetroot"
     "make"
     "cmake"
     "emacs"
@@ -118,6 +119,7 @@ declare -a aur_packages=(
     "polybar-dwm-module"
     "bashtop"
     "xinit-xsession"
+    "faba-icon-theme"
 )
 
 status "Installing AUR packages..."

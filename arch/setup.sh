@@ -94,6 +94,13 @@ declare -a pacman_packages=(
     "speedcrunch"
     "numlockx"
     "ttf-dejavu"
+    "ttf-liberation"
+    "noto-fonts"
+    "noto-fonts-emoji"
+    "noto-fonts-extra"
+    "ttf-font-awesome"
+    "ttf-hack"
+    "noto-fonts-cjk"
 )
 
 status "Installing pacman packages..."
@@ -111,14 +118,15 @@ if [ ! pacman -Qi paru > /dev/null ]; then
 fi
 
 declare -a aur_packages=(
-    "nerd-fonts-fira-code"
+    "nerd-fonts-complete"
+    "faba-icon-theme" # Needed by dunst volume controller in dwm.
+    "consolas-font"
     "archlinux-wallpaper"
     "google-chrome"
     "glow"
     "ark"
     "bashtop"
     "xinit-xsession"
-    "faba-icon-theme"
 )
 
 status "Installing AUR packages..."

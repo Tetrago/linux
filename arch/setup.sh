@@ -66,7 +66,6 @@ declare -a pacman_packages=(
     "ripgrep"
     "fd"
     "neofetch"
-    "lxsession"
     "network-manager-applet"
     "pcmanfm-gtk3"
     "lxappearance"
@@ -127,6 +126,7 @@ declare -a aur_packages=(
     "ark"
     "bashtop"
     "xinit-xsession"
+    "xfce-polkit"
 )
 
 status "Installing AUR packages..."

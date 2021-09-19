@@ -100,6 +100,7 @@ declare -a pacman_packages=(
     "ttf-font-awesome"
     "ttf-hack"
     "noto-fonts-cjk"
+    "lxsession"
 )
 
 status "Installing pacman packages..."
@@ -126,7 +127,6 @@ declare -a aur_packages=(
     "ark"
     "bashtop"
     "xinit-xsession"
-    "xfce-polkit"
 )
 
 status "Installing AUR packages..."

@@ -102,6 +102,7 @@ declare -a pacman_packages=(
     "ttf-jetbrains-mono"
     "noto-fonts-cjk"
     "lxsession"
+    "light-locker"
 )
 
 status "Installing pacman packages..."

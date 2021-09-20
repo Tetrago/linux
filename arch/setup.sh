@@ -99,6 +99,7 @@ declare -a pacman_packages=(
     "noto-fonts-extra"
     "ttf-font-awesome"
     "ttf-hack"
+    "ttf-jetbrains-mono"
     "noto-fonts-cjk"
     "lxsession"
 )

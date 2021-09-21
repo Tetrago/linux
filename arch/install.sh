@@ -86,9 +86,6 @@ pacman -Sq --noconfirm --needed networkmanager &> /dev/null
 log_list 1 "Enabling networking service"
 systemctl enable NetworkManager &> /dev/null
 
-log_list 1 "Enabling NTP"
-timedatectl set-ntp true
-
 # --- User management -----------------------------------------------------------------------------
 
 log_step 0 "User management..."

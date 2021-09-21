@@ -92,6 +92,7 @@ declare -a pacman_packages=(
     "noto-fonts-cjk"
     "lxsession"
     "light-locker"
+    "man-pages"
 )
 
 status "Installing pacman packages..."

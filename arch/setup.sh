@@ -112,7 +112,6 @@ declare -a aur_packages=(
     "nerd-fonts-complete"
     "faba-icon-theme" # Needed by dunst volume controller in dwm.
     "consolas-font"
-    "ttf-ms-fonts"
     "archlinux-wallpaper"
     "google-chrome"
     "glow"

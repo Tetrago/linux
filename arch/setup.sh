@@ -15,22 +15,11 @@ if [ "$(id -u)" = 0 ]; then
     error "DO NOT execute this scrip as the root user"
 fi
 
-startsudo()
-{
-    sudo -v
-    ( while true; do sudo -v; sleep 10; done; ) &
-    SUDO_PID = "$!"
-    trap stopsudo SIGINT SIGTERM
-}
+sudo -v
+( while true; do sudo -v; sleep 10; done; ) &
+SUDO_PID=$!
+trap "kill $SUDO_PID; sudo -k" SIGINT SIGTERM
 
-stopsudo()
-{
-    kill "$SUDO_PID"
-    trap - SIGINT SIGTERM
-    sudo -k
-}
-
-startsudo
 sudo pacman -S --noconfirm --needed dialog &> /dev/null
 
 welcome()

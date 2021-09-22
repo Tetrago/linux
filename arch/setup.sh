@@ -94,6 +94,8 @@ declare -a pacman_packages=(
     "lxsession"
     "light-locker"
     "man-pages"
+    "arc-icon-theme"
+    "arc-gtk-theme"
 )
 
 status "Installing pacman packages..."

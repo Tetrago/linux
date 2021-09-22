@@ -140,6 +140,10 @@ status "Changing shell..."
 
 sudo chsh -s /bin/fish $USER
 
+status "Updating mandb..."
+
+sudo mandb
+
 status "Updating dotfiles..."
 
 if [ ! -d "$HOME/dotfiles" ]; then

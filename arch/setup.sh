@@ -89,6 +89,7 @@ declare -a pacman_packages=(
     "ttf-hack"
     "ttf-jetbrains-mono"
     "ttf-roboto"
+    "inter-font"
     "noto-fonts-cjk"
     "lxsession"
     "light-locker"

@@ -172,7 +172,7 @@ sudo chsh -s /bin/fish $USER
 
 status "Enabling ufw..."
 
-sudo ufw enable || true
+sudo ufw enable
 
 status "Updating mandb..."
 

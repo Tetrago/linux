@@ -18,17 +18,18 @@ fi
 sudo -v
 ( while true; do sudo -v; sleep 10; done; ) &
 SUDO_PID=$!
-trap "kill $SUDO_PID; sudo -k" SIGINT SIGTERM
+trap "kill $SUDO_PID; sudo -k" 0
 
 sudo pacman -S --noconfirm --needed dialog &> /dev/null
 
-welcome()
+dialog --colors --backtitle "\Zb\Z2Arch Setup" --title "\Zb\Z2User Environment Setup Script" --msgbox "This script will install and configure a user environment. Any existing configuration files and packages are not guaranteed to remain intact." 0 0
+
+confirm_setup()
 {
-    dialog --colors --title "\ZbUser Environment Setup Script" --msgbox "This script will install and configure a user environment. Any existing configuration files and packages are not guaranteed to remain intact." 16 60
-    dialog --colors --title "\ZbProcedure" --yes-label "Continue" --no-label "Abort" --yesno "You will now be prompted for root privileges." 8 60
+    dialog --colors --backtitle "\Zb\Z2Arch Setup" --title "\Zb\Z2Procedure" --yes-label "Continue" --no-label "Abort" --yesno "You will now be prompted for root privileges." 0 0
 }
 
-welcome || error "Setup script aborted"
+confirm_setup || error "Setup script aborted"
 
 declare -a pacman_packages=(
     "neovim"

@@ -95,6 +95,7 @@ declare -a pacman_packages=(
     "man-pages"
     "arc-icon-theme"
     "arc-gtk-theme"
+    "kvantum-qt5"
 )
 
 status "Installing pacman packages..."

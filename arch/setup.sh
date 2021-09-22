@@ -144,6 +144,7 @@ echo "theme-name=Arc-Dark" | sudo tee -a /etc/lightdm/slick-greeter.conf
 echo "icon-theme-name=Arc" | sudo tee -a /etc/lightdm/slick-greeter.conf
 echo "font-name=Roboto" | sudo tee -a /etc/lightdm/slick-greeter.conf
 echo "background=/usr/share/backgrounds/gnome/adwaita-day.png" | sudo tee -a /etc/lightdm/slick-greeter.conf
+echo "clock-format=%l:%m %p" | sudo tee -a /etc/lightdm/slick-greeter.conf
 
 status "Changing shell..."
 

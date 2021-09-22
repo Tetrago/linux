@@ -158,7 +158,7 @@ sudo systemctl enable lightdm
 sudo sed -i 's/greeter-session=.*/greeter-session=lightdm-slick-greeter/g' /etc/lightdm/lightdm.conf
 sudo sed -i 's/#greeter-session=.*/greeter-session=lightdm-slick-greeter/g' /etc/lightdm/lightdm.conf
 
-echo -e "[Greeter]\nshow-a11y=false\ntheme-name=Arc-Dark\nicon-theme-name=Arc\nfont-name=Inter\nbackground=/usr/share/backgrounds/gnome/adwaita-day.png\nclock-format=%l:%m %p" | sudo tee /etc/lightdm/slick-greeter.conf
+echo -e "[Greeter]\nshow-a11y=false\ntheme-name=Arc-Dark\nicon-theme-name=Arc\nfont-name=Inter-Regular\nbackground=/usr/share/backgrounds/gnome/adwaita-day.png\nclock-format=%l:%m %p" | sudo tee /etc/lightdm/slick-greeter.conf
 
 status "Changing shell..."
 

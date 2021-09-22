@@ -22,7 +22,19 @@ trap "kill $SUDO_PID; sudo -k" 0
 
 sudo pacman -S --noconfirm --needed dialog &> /dev/null
 
+declare -a additional_software_options=(
+    "libreoffice-fresh" "LibreOffice" "off"
+    "code" "Open-Source Visual Studio Code" "off"
+    "mpd" "Music Player Daemon" "off"
+    "mpdris2" "MPD playerctl layer" "off"
+    "zeal" "Office Dev Docs" "off"
+    "cups" "Printer Server" "off"
+    "jetbrains-toolbox" "Jetbrains Toolbox" "off"
+)
+
 dialog --colors --backtitle "\Zb\Z2Arch Setup" --title "\Zb\Z2User Environment Setup Script" --msgbox "This script will install and configure a user environment. Any existing configuration files and packages are not guaranteed to remain intact." 0 0
+dialog --colors --backtitle "\Zb\Z2Arch Setup" --title "\Zb\Z2Additional Software" --ok-label "Add" --cancel-label "None" --checklist "Select any additional software you'd like to install" 0 0 0 "${additional_software_options[@]}" 2>/tmp/arch_setup
+additional_software=($(cat /tmp/arch_setup))
 
 confirm_setup()
 {
@@ -131,6 +143,12 @@ declare -a aur_packages=(
 status "Installing AUR packages..."
 
 for package in "${aur_packages[@]}"; do
+    sudo paru -S --noconfirm --sudoloop "$package"
+done
+
+status "Installing additional software..."
+
+for package in "${additional_software[@]}"; do
     sudo paru -S --noconfirm --sudoloop "$package"
 done
 

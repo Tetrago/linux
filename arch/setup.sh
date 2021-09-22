@@ -77,8 +77,7 @@ declare -a pacman_packages=(
     "scrot"
     "xclip"
     "acpi"
-    "lightdm-webkit2-greeter"
-    "lightdm-webkit-theme-litarvan"
+    "lightdm-slick-greeter"
     "speedcrunch"
     "numlockx"
     "ttf-dejavu"
@@ -135,9 +134,15 @@ done
 status "Configuring lightdm..."
 
 sudo systemctl enable lightdm
-sudo sed -i 's/greeter-session=.*/greeter-session=lightdm-webkit2-greeter/g' /etc/lightdm/lightdm.conf
-sudo sed -i 's/#greeter-session=.*/greeter-session=lightdm-webkit2-greeter/g' /etc/lightdm/lightdm.conf
-sudo sed -i 's/webkit_theme.*/webkit_theme=litarvan/g' /etc/lightdm/lightdm-webkit2-greeter.conf
+sudo sed -i 's/greeter-session=.*/greeter-session=lightdm-slick-greeter/g' /etc/lightdm/lightdm.conf
+sudo sed -i 's/#greeter-session=.*/greeter-session=lightdm-slick-greeter/g' /etc/lightdm/lightdm.conf
+
+echo "[Greeter]" | sudo tee -a /etc/lightdm/slick-greeter.conf
+echo "show-a11y=false" | sudo tee -a /etc/lightdm/slick-greeter.conf
+echo "theme-name=Arc-Dark" | sudo tee -a /etc/lightdm/slick-greeter.conf
+echo "icon-theme-name=Arc" | sudo tee -a /etc/lightdm/slick-greeter.conf
+echo "font-name=Roboto" | sudo tee -a /etc/lightdm/slick-greeter.conf
+echo "background=/usr/share/backgrounds/gnome/adwaita-day.png" | sudo tee -a /etc/lightdm/slick-greeter.conf
 
 status "Changing shell..."
 

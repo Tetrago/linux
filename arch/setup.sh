@@ -148,6 +148,10 @@ status "Changing shell..."
 
 sudo chsh -s /bin/fish $USER
 
+status "Enabling ufw..."
+
+sudo ufw enable || true
+
 status "Updating mandb..."
 
 sudo mandb

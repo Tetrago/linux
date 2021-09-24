@@ -139,6 +139,7 @@ declare -a aur_packages=(
     "ark"
     "bashtop"
     "xinit-xsession"
+    "clipit"
 )
 
 status "Installing AUR packages..."

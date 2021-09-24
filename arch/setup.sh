@@ -31,6 +31,7 @@ declare -a additional_software_options=(
     "cups" "Printer Server" "off"
     "jetbrains-toolbox" "Jetbrains Toolbox" "off"
     "okular" "Fully Featured PDF Viewer" "off"
+    "clipit" "Clipboard Manager" "off"
 )
 
 dialog --colors --backtitle "\Zb\Z2Arch Setup" --title "\Zb\Z2User Environment Setup Script" --msgbox "This script will install and configure a user environment. Any existing configuration files and packages are not guaranteed to remain intact." 0 0
@@ -139,7 +140,6 @@ declare -a aur_packages=(
     "ark"
     "bashtop"
     "xinit-xsession"
-    "clipit"
 )
 
 status "Installing AUR packages..."

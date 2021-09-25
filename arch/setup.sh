@@ -76,7 +76,6 @@ declare -a pacman_packages=(
     "qt5ct"
     "feh"
     "xfce4-power-manager"
-    "ufw"
     "gvfs"
     "alsa-utils"
     "playerctl"
@@ -165,10 +164,6 @@ echo -e "[Greeter]\nshow-a11y=false\ntheme-name=Arc-Dark\nicon-theme-name=Arc\nf
 status "Changing shell..."
 
 sudo chsh -s /bin/fish $USER
-
-status "Enabling ufw..."
-
-sudo ufw enable
 
 status "Updating mandb..."
 

@@ -71,6 +71,7 @@ declare -a pacman_packages=(
     "fd"
     "neofetch"
     "network-manager-applet"
+    "pasystray"
     "pcmanfm-gtk3"
     "lxappearance"
     "qt5ct"

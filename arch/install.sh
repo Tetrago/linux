@@ -74,7 +74,7 @@ hostname=$(cat /etc/hostname)
 log_list 1 "Modifying hosts"
 echo "127.0.0.1 localhost" >> /etc/hosts
 echo "::1 localhost" >> /etc/hosts
-echo "127.0.1.1 $hostname.localdomain $hostname" >> /etc/hosts
+echo "127.0.1.1 $hostname" >> /etc/hosts
 
 log_list 1 "Installing archlinux-keyring"
 pacman -Sy --noconfirm archlinux-keyring &> /dev/null
